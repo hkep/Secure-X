@@ -7,5 +7,5 @@ or B:
 doesn't notice it.]]
 wait(0.25)
 game.Players.LocalPlayer.Character.Humanoid.Changed:Connect(function()
-	game.ReplicatedStorage.event_121134:FireServer(game.Players.LocalPlayer.Character.Humanoid.WalkSpeed)
+	game.ReplicatedStorage.event_121134:FireServer(game.Players.LocalPlayer.Character.Humanoid.WalkSpeed,"SECRETCODEGENERATEAGUIDANDPUTITHERE")
 end)
