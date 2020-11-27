@@ -5,7 +5,7 @@ game.Players.PlayerAdded:Connect(function(player)
 	local playerTableZ = {}
 	local currentPos;
 	if char.PrimaryPart then
-		char.PrimaryPart:GetPropertyChangedSignal(function()
+		char.PrimaryPart:GetPropertyChangedSignal("Position"):Connect(function()
 			pcall(function() 
 				if currentPos then
 					local xDiff = math.abs(char.PrimaryPart.Position.X - currentPos.X)
