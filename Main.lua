@@ -1,5 +1,3 @@
-wait(0.25)
-print("Squirrel Plus Enabled. Stay safe :)")
 local s = require(game.Workspace["Squirrel+"].Settings)
 game.ReplicatedStorage.event_121134.OnServerEvent:Connect(function(player,localspeed,authcode)
 		if authcode=="SECRETCODEGENERATEAGUIDANDPUTITHERE" then
