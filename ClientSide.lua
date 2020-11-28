@@ -5,5 +5,7 @@ playerservice = game:GetService("Players")
 playerservice.PlayerAdded:Wait()
 playerservice.LocalPlayer.Character.Humanoid.Changed:Connect(function()
 	local event = game:GetService("ReplicatedStorage"):FindFirstChild("event_121134")
-	event:FireServer(game.Players.LocalPlayer.Character.Humanoid.WalkSpeed,"SECRETCODEGENERATEAGUIDANDPUTITHERE")
+	if event then
+		event:FireServer(game.Players.LocalPlayer.Character.Humanoid.WalkSpeed,"SECRETCODEGENERATEAGUIDANDPUTITHERE")
+	end
 end)
