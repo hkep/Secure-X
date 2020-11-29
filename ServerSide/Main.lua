@@ -1,5 +1,5 @@
 local event = game:GetService("ReplicatedStorage"):FindFirstChild("event_121134")
-local s = require(game.Workspace["Squirrel+"].Settings)
+local s = require(game.ServerScriptService["Squirrel+"].Settings)
 if event then
 	event.OnServerEvent:Connect(function(player,localspeed,authcode)
 		if authcode=="SECRETCODEGENERATEAGUIDANDPUTITHERE" then
