@@ -1,5 +1,6 @@
 local event = game:GetService("ReplicatedStorage"):FindFirstChild("event_121134")
-local s = require(game.ServerScriptService["Squirrel+"].Settings)
+local s = require(game:GetService("ServerScriptService"):FindFirstChild("Secure X"):FindFirstChild("Settings"))
+--Client-side walkspeed checking:
 if event then
 	event.OnServerEvent:Connect(function(player,localspeed,authcode)
 		if authcode=="SECRETCODEGENERATEAGUIDANDPUTITHERE" then
@@ -18,3 +19,21 @@ if event then
 		end
 	end)
 end
+
+--Prefix Checking:
+game:GetService("Players").PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Wait()
+	if s.usernamePrefixChecking==true then
+	local prefixes = s.suspiciousUsernamePrefixes
+	local playerName = player.Name
+		for i=1,#prefixes,1 do
+			wait(0.1)
+		local prefixLength = string.len(prefixes[i])
+		local playerString = string.sub(playerName,0,prefixLength)
+		if string.lower(playerString)==string.lower(prefixes[i]) then
+				s.sendCaptcha(player)
+				break
+			end
+			end
+	end
+end)
