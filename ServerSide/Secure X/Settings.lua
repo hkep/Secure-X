@@ -1,4 +1,3 @@
---THIS IS A MODULESCRIPT
 --Change settings here.
 --Each setting is also explained here.
 local options = {
@@ -17,7 +16,7 @@ local options = {
 	usernamePrefixChecking = true,
 	--turn on or off checking username prefixes.
 	
-	suspiciousUsernamePrefixes = {"catbot_"},
+	suspiciousUsernamePrefixes = {"catbot_","Void_"},
 	--Suspicious username prefixes, requires all users with a username that starts with any of these strings to fill out a short captcha before they can play.
 	--If the user fails, whatever is defined in captchaFailAction will be ran.
 	
@@ -46,9 +45,18 @@ function options.catchAction(player,violation)
 	--the PLAYER variable inside of this function is what would appear for a specific player under game.Players, that is a class of Player and not Character or Humanoid.
 	player:Kick("You have been detected by Squirrel Plus. Please refrain from using cheats. Cheat Detected: "..violation)
 end
-function captchaFailAction(player)
+function options.captchaFailAction(player)
 	if options.captchaRetriesAllow==true then
-		
+		-- WIP
 	end
+end
+function options.sendCaptcha(player)
+	--Captcha is still under development, all it does right now is add a TextLabel.
+	--local captchaGui = Instance.new("ScreenGui")
+	--captchaGui.Parent=player.PlayerGui
+	--local labelOne = Instance.new("TextLabel")
+	--labelOne.Parent = captchaGui
+	--labelOne.Text="TEST"
+	--labelOne.Position=UDim2.new(0.5,0,0.5,0)
 end
 return options
