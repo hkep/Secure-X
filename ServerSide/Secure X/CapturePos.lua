@@ -1,20 +1,17 @@
 --NOT WORKING
-game.Players.PlayerAdded:Connect(function(player)
-	local char = player.CharacterAdded:Wait()
-	local currentPos;
-	if char.PrimaryPart then
-		char.PrimaryPart:GetPropertyChangedSignal("Position"):Connect(function()
+game:GetService("Players").PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Wait()
+	if player.Character:FindFirstChild("UpperTorso")~=nil then 
+		while wait(1) do
 			pcall(function() 
-				if currentPos then
-					local xDiff = math.abs(char.PrimaryPart.Position.X - currentPos.X)
-					local zDiff = math.abs(char.PrimaryPart.Position.Z - currentPos.Z)
-					--print("xdiff: "..xDiff) -- DEBUG
-					--print("zdiff: "..zDiff) -- DEBUG
+		if currentpos ~=nil   then
+			local xdiff = math.abs(player.Character.UpperTorso.Position.X - currentpos.X)
+			local zdiff = math.abs(player.Character.UpperTorso.Position.Z - currentpos.Z)
+			print("xdiff: "..xdiff)
+			print("zdiff: "..zdiff)
 				end
-			end)
-			pcall(function()
-				currentPos = char.PrimaryPart.Position;
-			end)
-		end)
+				end)
+		pcall(function()currentpos = player.Character.UpperTorso.Position end)
+		end
 	end
-end)
+	end)
