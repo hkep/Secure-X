@@ -1,0 +1,76 @@
+--[=[
+
+This script is useless and broken because if you make changes to
+	humanoid.WalkSpeed or even humanoid.JumpPower/humanoid.JumpPowerEnabled/humanoid.JumpHeight
+	on the client it will not replicate to the server despite the client having network ownership
+	over the character.
+I have no idea outside of a client script on how to counter a
+	speed exploit other than differences in XZ positioning.
+
+If WalkSpeed is replicated from client to server then this will work.
+
+--]=]
+
+local PossibleWalkSpeeds = {16}
+local CheckPossible = false -- PossibleWalkSpeeds
+local CheckResponse = false -- Changes are correct (another script says so)
+local MaxWaitTime = 1 -- how long to wait for a response from another script to say the walkspeed was supposed to change
+
+-- Make a Way to tell this script what the character walkspeed is supposed to be
+local RE = Instance.new("RemoteEvent")
+RE.Name = "WalkSpeedChanged"
+RE.Parent = game:GetService("ReplicatedStorage") -- RE:FireServer(newWalkSpeed)
+
+game:GetService("Players").PlayerAdded:Connect(function(Player)
+	
+	local currentWS = PossibleWalkSpeeds[1]
+	if CheckResponse then -- change the following code to fit your game if needed
+		RE.OnServerEvent:Connect(function(xPlayer, Speed)
+			if (xPlayer == Player) then
+				if Speed then
+					currentWS = Speed
+				else
+					error("BAD VALUE: Speed is "..tostring(Speed))
+				end
+			end
+		end)
+	end
+	
+	Player.CharacterAdded:Connect(function(Character)
+		local hum = Character:WaitForChild("Humanoid")
+		local changedEv = hum:GetPropertyChangedSignal("WalkSpeed")
+		currentWS = PossibleWalkSpeeds[1]
+		changedEv:Connect(function()
+			
+			if CheckPossible then
+				local found = false
+				for _,v in ipairs(PossibleWalkSpeeds) do
+					if (v == hum.WalkSpeed) then
+						found = true
+						break
+					end
+				end
+				if (found == false) then
+					Player:Kick("WalkSpeed Exploits are not allowed")
+				end
+			end
+			
+			if CheckResponse and (currentWS ~= hum.WalkSpeed) then
+				local isbad = true
+				local xWS = currentWS
+				local xev = changedEv:Connect(function()
+					if (xWS == hum.WalkSpeed) then
+						isbad = false
+					elseif (currentWS == hum.WalkSpeed) then
+						isbad = false
+					end
+				end)
+				wait(MaxWaitTime)
+				if isbad then
+					Player:Kick("WalkSpeed Exploit Detected")
+				end
+				xev:Disconnect()
+			end
+		end)
+	end)
+end)
